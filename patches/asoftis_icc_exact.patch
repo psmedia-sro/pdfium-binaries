@@ -1,0 +1,13 @@
+--- a/core/fpdfapi/page/cpdf_colorspace.cpp	2026-10-25 02:03:02.402968400 +0100
++++ b/core/fpdfapi/page/cpdf_colorspace.cpp	2026-10-25 02:03:02.464455900 +0100
+@@ -1020,7 +1020,9 @@
+     nMaxColors *= 52;
+   }
+ 
+-  bool bTranslate = nComponents > 3;
++  // Asoftis: always use the exact ICC transform. The 52-level lookup table
++  // below causes visible banding in smooth gradients of large RGB images.
++  bool bTranslate = true;
+   if (!bTranslate) {
+     FX_SAFE_INT32 nPixelCount = image_width;
+     nPixelCount *= image_height;
